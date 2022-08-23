@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  host: <%= ENV["DATABASE_HOST"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+
+development:
+  <<: *default
+  database: rails_forum_development
+
+test:
+  <<: *default
+  database: rails_forum_test

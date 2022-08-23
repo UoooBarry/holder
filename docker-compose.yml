@@ -1,0 +1,57 @@
+version: '3'
+networks:
+  development:
+  test:
+services:
+  db:
+    image: postgres:13
+    environment: 
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'password'
+    networks:
+      - development
+      - test
+    volumes:
+      - postgres:/data/postgres
+  web:
+    build: .
+    tty: true
+    stdin_open: true
+    networks:
+      - development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: "db"
+      DATABASE_USERNAME: "admin"
+      DATABASE_PASSWORD: "password"
+      DATABASE_PORT: 5432
+    volumes:
+      - .:/rails-forum:delegated
+      - bundle:/usr/local/bundle
+      - cache:/rails-forum/tmp/cache
+  web_test:
+    build: .
+    container_name: rails-forum-test
+    ports:
+      - "9000:3000"
+    networks:
+      - test
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: "db"
+      DATABASE_USERNAME: "admin"
+      DATABASE_PASSWORD: "password"
+      DATABASE_PORT: 5432
+      RAILS_ENV: test
+    volumes:
+      - .:/rails-forum:delegated
+      - bundle:/usr/local/bundle
+      - cache:/rails-forum/tmp/cache
+volumes:
+  postgres:
+  cache:
+  bundle:
