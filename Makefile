@@ -1,3 +1,5 @@
+init:
+	docker-compose build & make db-setup && docker-compose run --rm web rails credentials:edit
 rspec:
 	docker-compose run --rm web_test rspec
 rubocop:

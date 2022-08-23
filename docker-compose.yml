@@ -28,6 +28,7 @@ services:
       DATABASE_USERNAME: "admin"
       DATABASE_PASSWORD: "password"
       DATABASE_PORT: 5432
+      EDITOR: "vim"
     volumes:
       - .:/rails-forum:delegated
       - bundle:/usr/local/bundle
