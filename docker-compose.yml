@@ -34,8 +34,16 @@ services:
       - bundle:/usr/local/bundle
       - cache:/rails-forum/tmp/cache
   web_test:
-    build: .
+    image: rails-forum_web
     container_name: rails-forum-test
+    entrypoint: test-entrypoint.sh
+    command: ["rails", "-v"]
+    stdin_open: true
+    volumes:
+      - .:/rails-forum:delegated
+      - bundle:/usr/local/bundle
+      - cache:/rails-forum/tmp/cache
+    tty: true
     ports:
       - "9000:3000"
     networks:
@@ -48,11 +56,7 @@ services:
       DATABASE_PASSWORD: "password"
       DATABASE_PORT: 5432
       RAILS_ENV: test
-    volumes:
-      - .:/rails-forum:delegated
-      - bundle:/usr/local/bundle
-      - cache:/rails-forum/tmp/cache
 volumes:
   postgres:
   cache:
-  bundle:
+  bundle: 

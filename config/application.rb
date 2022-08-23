@@ -15,6 +15,8 @@ require 'action_cable/engine'
 # require "sprockets/railtie"
 require 'rails/test_unit/railtie'
 
+require_relative '../lib/middlewares/auth_middleware'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -25,6 +27,9 @@ module RailsForum
     config.load_defaults 6.1
 
     config.eager_load_paths << Rails.root.join('lib/autoloads')
+    config.eager_load_paths << Rails.root.join('lib/middlewares')
+
+    config.middleware.use ::Middleware::AuthMiddleware
 
     # Configuration for the application, engines, and railties goes here.
     #

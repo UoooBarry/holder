@@ -22,7 +22,7 @@ RSpec.describe Jwt::IssueService do
 
       decoded = JsonWebToken.decode(token)
 
-      expect((decoded)[:username]).equal?(@user.to_payload[:username])
+      expect(decoded[:username]).equal?(@user.to_payload[:username])
     end
   end
 end
