@@ -15,6 +15,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let!(:user) { create(:user) }
+  let!(:community) { create(:community) }
+
   describe 'validations' do
     subject { User.new(username: 'uooobarry', password: 'noexceptions:)', email: 'test@test.com') }
     it { should validate_uniqueness_of(:username) }
@@ -32,5 +35,27 @@ RSpec.describe User, type: :model do
                     bio: 'Hello world',
                     gender: User.genders[:male],
                     age: 22)).to be_valid
+  end
+
+  context 'when subsribing to a community' do
+    it 'can subscribe to a community' do
+      user.subscribe!(community.id)
+      subscribed = user.subscribe?(community.id)
+      expect(subscribed).to be_truthy
+    end
+
+    it 'cannot subscribe to a community twice' do
+      expect do
+        user.subscribe!(community.id)
+        user.subscribe!(community.id)
+      end.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it 'can unsubscribe from a community' do
+      expect do
+        user.subscribe!(community.id)
+        user.unsubscribe!(community.id)
+      end.not_to raise_error
+    end
   end
 end
