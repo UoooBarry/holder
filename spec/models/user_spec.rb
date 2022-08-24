@@ -19,8 +19,8 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:password) }
-  it { shoudld validates_length_of :username, within: 4..20 }
-  it { shoudld validates_length_of :password, within: 8..30 }
+  it { should validate_length_of(:username) }
+  it { should validate_length_of(:password) }
 
   it 'is valid with valid user' do
     expect(User.new(email: 'test@test.com',
