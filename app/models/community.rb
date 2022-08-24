@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: communities
+#
+#  id          :bigint           not null, primary key
+#  name        :string           not null
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Community < ApplicationRecord
   validates :name, presence: true
 

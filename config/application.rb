@@ -27,7 +27,7 @@ module RailsForum
     config.load_defaults 6.1
 
     config.eager_load_paths << Rails.root.join('lib/autoloads')
-    config.eager_load_paths << Rails.root.join('lib/middlewares')
+    config.eager_load_paths << Rails.root.join('lib/middlwares')
 
     config.middleware.use ::Middleware::AuthMiddleware
 
