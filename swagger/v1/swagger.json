@@ -22,9 +22,9 @@
                     "message": "success"
                   },
                   "payload": {
-                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImdlbmRlciI6InNlY3JldCIsInVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTY2MTQwMTIyMH0.95PeB0kBBzpMrwZDr323hG5kZ32AF2HrbeZjCsoEAws",
-                    "exp_at": "2022-08-25T04:20:20.121Z",
-                    "refresh_token": "21164ae6c192a7a7b7ad593483be9f16"
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ODcsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJzZWNyZXQiLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NjE0MTcwNjB9.2HlGpgzHd5wNPW0V0mo6oBJ-dnNRqEXBCStB-w_Cu3g",
+                    "exp_at": "2022-08-25T08:44:20.482Z",
+                    "refresh_token": "9cbec04f87a9fc1a35d20732202f33cf"
                   }
                 }
               }
@@ -74,9 +74,9 @@
                     "message": "success"
                   },
                   "payload": {
-                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImdlbmRlciI6InNlY3JldCIsInVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTY2MTQwMTIyMH0.95PeB0kBBzpMrwZDr323hG5kZ32AF2HrbeZjCsoEAws",
-                    "exp_at": "2022-08-25T04:20:20.274Z",
-                    "refresh_token": "b59f5590469761e401e34c786d8bc81b"
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ODksImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJzZWNyZXQiLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NjE0MTcwNjB9.PFQyUWjZmgO5Y_J5pV5_fA4g0rY0dlHDwjcUJUJp4Hc",
+                    "exp_at": "2022-08-25T08:44:20.543Z",
+                    "refresh_token": "a884d5af906a21a734b93f5a50412523"
                   }
                 }
               }
@@ -135,11 +135,154 @@
           }
         }
       }
+    },
+    "/api/communities": {
+      "get": {
+        "summary": "index",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "default": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "default": 10,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List communities",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "communities": [
+                      {
+                        "id": 32,
+                        "name": "Ruby",
+                        "description": "Wonderful language",
+                        "created_at": "2022-08-24T08:44:20.591Z",
+                        "updated_at": "2022-08-24T08:44:20.591Z",
+                        "creator_id": null
+                      }
+                    ],
+                    "total_count": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/communities/{id}": {
+      "get": {
+        "summary": "show",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Show community",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "community": {
+                      "id": 33,
+                      "name": "Ruby",
+                      "description": "Wonderful language",
+                      "created_at": "2022-08-24T08:44:20.618Z",
+                      "updated_at": "2022-08-24T08:44:20.618Z",
+                      "creator_id": null
+                    },
+                    "subscribed_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/communities/{id}/subscribe": {
+      "post": {
+        "summary": "subscribe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscribe to community",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "servers": [
     {
-      "url": "https://{defaultHost}",
+      "url": "http://{defaultHost}",
       "variables": {
         "defaultHost": {
           "default": "localhost.com"

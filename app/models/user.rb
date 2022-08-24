@@ -50,4 +50,8 @@ class User < ApplicationRecord
   def authenticated?(password)
     BCrypt::Password.new(password_digest).is_password?(password)
   end
+
+  def created_communities
+    Community.where(creator_id: id)
+  end
 end

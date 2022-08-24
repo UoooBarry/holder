@@ -26,4 +26,10 @@ module SubscribeCommunityConcern
 
     save!
   end
+
+  def subscribed_at?(community)
+    community = Community.find(community) if community.is_a?(Integer)
+
+    CommunitiesUser.find_by(community: community, user: self).created_at
+  end
 end
