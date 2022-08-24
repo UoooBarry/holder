@@ -15,6 +15,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  it { should validate_uniqueness_of(:username) }
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:username) }
+  it { should validate_presence_of(:password) }
+  it { shoudld validates_length_of :username, within: 4..20 }
+  it { shoudld validates_length_of :password, within: 8..30 }
+
   it 'is valid with valid user' do
     expect(User.new(email: 'test@test.com',
                     username: 'joey',
@@ -22,21 +29,5 @@ RSpec.describe User, type: :model do
                     bio: 'Hello world',
                     gender: User.genders[:male],
                     age: 22)).to be_valid
-  end
-
-  it 'is not valid without a username' do
-    expect(User.new(username: nil)).to_not be_valid
-  end
-
-  it 'is not valid without a email' do
-    expect(User.new(email: nil)).to_not be_valid
-  end
-
-  it 'is not valid without a password' do
-    expect(User.new(password: nil)).to_not be_valid
-  end
-
-  it 'is not valid with a incorrect email formate' do
-    expect(User.new(email: '123')).to_not be_valid
   end
 end

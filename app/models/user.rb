@@ -15,8 +15,10 @@
 class User < ApplicationRecord
   has_secure_password
   validates :email, :username, :password, presence: true
-  validates :password, length: { minimum: 8 }
+  validates :password, length: { minimum: 8, maximum: 30 }
+  validates :username, length: { minimum: 4, maximum: 20 }
   validates :email, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/
+  validates :username, uniqueness: true
 
   has_many :refresh_tokens, dependent: :destroy
 

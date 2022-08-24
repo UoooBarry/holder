@@ -1,6 +1,6 @@
 module Api
   class ApplicationController < ApplicationController
-    def require_actions(*actions); end
+    include Authenticatable
 
     def render_error(message, status: 500)
       content = {
@@ -26,10 +26,6 @@ module Api
       render json: content, status: :ok
     end
 
-    def current_user
-      request.env['current_user']
-    end
-
     rescue_from ActiveRecord::ActiveRecordError, ActiveRecord::RecordInvalid do |exception|
       render_error(exception.message, status: 400)
     end
@@ -40,6 +36,10 @@ module Api
 
     rescue_from ::Jwt::Errors::UnAuthorizedUser, ::Jwt::Errors::MissingToken do |exception|
       render_error(exception.message, status: 403)
+    end
+
+    rescue_from ActionController::ParameterMissing do
+      render_error('Parameters provided is incorrect or missing', status: 400)
     end
   end
 end

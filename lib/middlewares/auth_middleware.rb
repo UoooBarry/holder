@@ -24,11 +24,5 @@ module Middleware
 
       [status, headers, response]
     end
-
-    private
-
-    def logger
-      @logger ||= Logger.new(Rails.root.join('log/auth.log'))
-    end
   end
 end

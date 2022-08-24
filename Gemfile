@@ -32,6 +32,10 @@ gem 'net-smtp'
 # authentication
 gem 'jwt'
 
+# rswag for api doc
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -40,6 +44,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
   gem 'annotate'
+  gem 'rswag-specs'
 end
 
 group :development do

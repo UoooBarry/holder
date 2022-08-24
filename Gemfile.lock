@@ -246,6 +246,9 @@ DEPENDENCIES
   rails (~> 6.1.6, >= 6.1.6.1)
   rspec-rails (~> 5.0.0)
   rswag
+  rswag-api
+  rswag-specs
+  rswag-ui
   rubocop
   rubocop-rails
   spring

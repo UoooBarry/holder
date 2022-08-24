@@ -18,3 +18,5 @@ bundle-update:
 	docker-compose run --rm web bundle update
 annotate-models:
 	docker-compose run --rm web bundle exec annotate --models --exclude fixtures
+swaggerize:
+	docker-compose run --rm web_test rake rswag:specs:swaggerize
