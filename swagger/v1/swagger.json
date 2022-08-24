@@ -1,0 +1,150 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "summary": "login",
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Login success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImdlbmRlciI6InNlY3JldCIsInVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTY2MTQwMTIyMH0.95PeB0kBBzpMrwZDr323hG5kZ32AF2HrbeZjCsoEAws",
+                    "exp_at": "2022-08-25T04:20:20.121Z",
+                    "refresh_token": "21164ae6c192a7a7b7ad593483be9f16"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Information provided is not correct"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "summary": "refresh",
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Refresh success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsImdlbmRlciI6InNlY3JldCIsInVzZXJuYW1lIjoidGVzdCIsImV4cCI6MTY2MTQwMTIyMH0.95PeB0kBBzpMrwZDr323hG5kZ32AF2HrbeZjCsoEAws",
+                    "exp_at": "2022-08-25T04:20:20.274Z",
+                    "refresh_token": "b59f5590469761e401e34c786d8bc81b"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "refresh_token"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "logout",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "logout success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{defaultHost}",
+      "variables": {
+        "defaultHost": {
+          "default": "localhost.com"
+        }
+      }
+    }
+  ]
+}
