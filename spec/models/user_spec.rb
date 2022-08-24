@@ -15,14 +15,15 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { create :user }
-
-  it { should validate_uniqueness_of(:username) }
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:username) }
-  it { should validate_presence_of(:password) }
-  it { should validate_length_of(:username) }
-  it { should validate_length_of(:password) }
+  describe 'validations' do
+    subject { User.new(username: 'uooobarry', password: 'noexceptions:)', email: 'test@test.com') }
+    it { should validate_uniqueness_of(:username) }
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:username) }
+    it { should validate_presence_of(:password) }
+    it { should validate_length_of(:username) }
+    it { should validate_length_of(:password) }
+  end
 
   it 'is valid with valid user' do
     expect(User.new(email: 'test@test.com',
