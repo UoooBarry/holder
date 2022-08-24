@@ -2,7 +2,7 @@ module Authenticatable
   extend ActiveSupport::Concern
 
   def current_user
-    @current_user ||= request.env['current_user']
+    request.env['current_user']
   end
 
   def logged_in?
@@ -15,7 +15,7 @@ module Authenticatable
 
   class_methods do
     def require_auth!(only: [], except: [])
-      before_action :validate_auth!, only: only, except: except
+      before_action :validate_auth!, only: only.presence, except: except.presence
     end
   end
 end

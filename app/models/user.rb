@@ -13,14 +13,20 @@
 #  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
+  include SubscribeCommunityConcern
+
   has_secure_password
-  validates :email, :username, :password, presence: true
-  validates :password, length: { minimum: 8, maximum: 30 }
+  validates :email, :username, presence: true
   validates :username, length: { minimum: 4, maximum: 20 }
   validates :email, format: /\w+@\w+\.{1}[a-zA-Z]{2,}/
   validates :username, uniqueness: true
 
+  # only validate when password is provided
+  validates :password, presence: true, length: { minimum: 8, maximum: 20 }, if: :password
+
   has_many :refresh_tokens, dependent: :destroy
+  has_many :communities_users, class_name: 'CommunitiesUser', dependent: :destroy
+  has_many :communities, through: :communities_users
 
   enum gender: {
     secret: 0,
@@ -43,5 +49,9 @@ class User < ApplicationRecord
 
   def authenticated?(password)
     BCrypt::Password.new(password_digest).is_password?(password)
+  end
+
+  def created_communities
+    Community.where(creator_id: id)
   end
 end
