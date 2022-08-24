@@ -1,7 +1,7 @@
 class CreateCommunities < ActiveRecord::Migration[6.1]
   def change
     create_table :communities do |t|
-      t.string :name, null: false, index: true
+      t.string :name, null: false
       t.text :description
 
       t.timestamps
