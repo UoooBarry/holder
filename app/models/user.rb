@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_many :refresh_tokens, dependent: :destroy
   has_many :communities_users, class_name: 'CommunitiesUser', dependent: :destroy
   has_many :communities, through: :communities_users
+  has_many :posts, dependent: :destroy
 
   enum gender: {
     secret: 0,
