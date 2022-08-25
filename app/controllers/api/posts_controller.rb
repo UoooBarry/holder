@@ -23,12 +23,13 @@ module Api
       @posts = @posts.default_order.page(page).per(per_page)
       @total_count = @posts.total_count
 
-      @posts_json = @posts.as_json(include: [user: { only: %i[id username gender age] }])
+      @posts_json = @posts.as_json(include: [user: { only: %i[id username gender age] }], methods: %i[likes_count])
       render_response(posts: @posts_json, total_count: @total_count)
     end
 
     def show
-      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }], methods: %i[comments likes_count])
+      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }],
+                                 methods: %i[comments likes_count])
 
       render_response(post: @post_json)
     end

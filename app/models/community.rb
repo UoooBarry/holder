@@ -31,6 +31,10 @@ class Community < ApplicationRecord
     save!
   end
 
+  def admin?(user)
+    admins.include?(user)
+  end
+
   private
 
   def creator_auto_subscribe

@@ -1,5 +1,5 @@
 puts 'creating sample user'
-User.create!(email: 'test@test.com',
+user = User.create!(email: 'test@test.com',
              username: 'barry',
              password: 'pwd123123',
              bio: 'Hello world',
@@ -7,4 +7,7 @@ User.create!(email: 'test@test.com',
              age: 22)
 
 puts 'creating sample community'
-Community.create!(name: 'Ruby', description: 'Magical.')
+community = Community.create!(name: 'Ruby', description: 'Magical.')
+
+puts 'Setting user to community admin'
+community.admin!(user)
