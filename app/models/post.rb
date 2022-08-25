@@ -14,11 +14,15 @@
 #  updated_at   :datetime         not null
 #
 class Post < ApplicationRecord
+  # FullTextSearch
+  include Searchable
+  include PostSearchConcern
+
   include Likeable
   include Replyable
   include Pinable
 
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :community
   belongs_to :post, optional: true
 
