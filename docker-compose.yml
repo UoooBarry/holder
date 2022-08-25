@@ -13,6 +13,22 @@ services:
       - test
     volumes:
       - postgres:/data/postgres
+  es:
+    container_name: es-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    healthcheck:
+      test: curl -s http://container:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    ports:
+      - 9200:9200 
+    networks:
+      - development
+      - test
   web:
     build: .
     tty: true
@@ -23,7 +39,9 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - es
     environment:
+      ELASTIC_SEARCH_URL: 'es-container:9200'
       DATABASE_HOST: "db"
       DATABASE_USERNAME: "admin"
       DATABASE_PASSWORD: "password"
@@ -50,7 +68,9 @@ services:
       - test
     depends_on:
       - db
+      - es
     environment:
+      ELASTIC_SEARCH_URL: 'es-container:9200'
       DATABASE_HOST: "db"
       DATABASE_USERNAME: "admin"
       DATABASE_PASSWORD: "password"

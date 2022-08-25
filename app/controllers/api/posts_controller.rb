@@ -13,6 +13,11 @@ module Api
       per_page = params[:per_page] || 10
 
       @posts = Post
+      if params[:q].present?
+        response = @posts.search(params[:q])
+
+        @posts = response.records
+      end
 
       if community_id.present?
         @posts = @posts.by_community(community_id)
