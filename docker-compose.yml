@@ -16,6 +16,11 @@ services:
   es:
     container_name: es-container
     image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    healthcheck:
+      test: curl -s http://container:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
     environment:
       - xpack.security.enabled=false
       - "discovery.type=single-node"

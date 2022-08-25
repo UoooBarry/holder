@@ -12,7 +12,7 @@ RSpec.describe 'api/posts', type: :request do
       parameter name: :community_id, in: :query, type: :string, required: false
       parameter name: :page, in: :query, type: :integer, default: 1, required: false
       parameter name: :per_page, in: :query, type: :integer, default: 10, required: false
-      parameter name: :q, in: :query, type: :integer, default: 10, required: false
+      parameter name: :q, in: :query, type: :string, required: false
       parameter name: 'Authorization', in: :header, type: :string, required: false, description: 'Bearer token'
 
       response '200', 'List posts' do
