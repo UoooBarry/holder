@@ -1,8 +1,10 @@
 module Authenticatable
   extend ActiveSupport::Concern
 
+  class UnAuthorizedResource < StandardError; end
+
   def current_user
-    request.env['current_user']
+    @current_user ||= User.find_by(id: request.env['current_user_id'])
   end
 
   def logged_in?
@@ -11,6 +13,10 @@ module Authenticatable
 
   def validate_auth!
     raise Jwt::Errors::UnAuthorizedUser, 'Require login' unless logged_in?
+  end
+
+  def validate_owndership!(resource)
+    raise UnAuthorizedResource, 'You are not authorized to access this resource' unless resource.user == current_user
   end
 
   class_methods do

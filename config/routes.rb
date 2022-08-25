@@ -9,9 +9,18 @@ Rails.application.routes.draw do
     post '/auth/logout', to: 'authentication#logout'
 
     resources :users, only: [:create]
+
     resources :communities do
       member do
         post :subscribe
+        post :unsubscribe
+      end
+    end
+
+    resources :posts do
+      member do
+        post :like
+        post :reply
       end
     end
   end

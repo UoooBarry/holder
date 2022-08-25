@@ -22,9 +22,9 @@
                     "message": "success"
                   },
                   "payload": {
-                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ODcsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJzZWNyZXQiLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NjE0MTcwNjB9.2HlGpgzHd5wNPW0V0mo6oBJ-dnNRqEXBCStB-w_Cu3g",
-                    "exp_at": "2022-08-25T08:44:20.482Z",
-                    "refresh_token": "9cbec04f87a9fc1a35d20732202f33cf"
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQxLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZ2VuZGVyIjoic2VjcmV0IiwidXNlcm5hbWUiOiJ0ZXN0IiwiZXhwIjoxNjYxNDk2MzMwfQ.xr7BBuqs9JbFhIOcGA4NMRJF8xLntYrDW8dqVxDsZLk",
+                    "exp_at": "2022-08-26T06:45:30.222Z",
+                    "refresh_token": "0c7dbde70938c2bf746daa97ec7494fc"
                   }
                 }
               }
@@ -74,9 +74,9 @@
                     "message": "success"
                   },
                   "payload": {
-                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ODksImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJzZWNyZXQiLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NjE0MTcwNjB9.PFQyUWjZmgO5Y_J5pV5_fA4g0rY0dlHDwjcUJUJp4Hc",
-                    "exp_at": "2022-08-25T08:44:20.543Z",
-                    "refresh_token": "a884d5af906a21a734b93f5a50412523"
+                    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQzLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZ2VuZGVyIjoic2VjcmV0IiwidXNlcm5hbWUiOiJ0ZXN0IiwiZXhwIjoxNjYxNDk2MzMwfQ.NKtmQRtxTqXFgwk8UuJe_fTf8uBnMGHb2obHWd2lbD8",
+                    "exp_at": "2022-08-26T06:45:30.287Z",
+                    "refresh_token": "8e666501fc39e20925f17e95c23580d3"
                   }
                 }
               }
@@ -170,12 +170,13 @@
                   "payload": {
                     "communities": [
                       {
-                        "id": 32,
+                        "id": 437,
                         "name": "Ruby",
                         "description": "Wonderful language",
-                        "created_at": "2022-08-24T08:44:20.591Z",
-                        "updated_at": "2022-08-24T08:44:20.591Z",
-                        "creator_id": null
+                        "created_at": "2022-08-25T06:45:30.334Z",
+                        "updated_at": "2022-08-25T06:45:30.334Z",
+                        "creator_id": null,
+                        "subscribed_at": null
                       }
                     ],
                     "total_count": 1
@@ -221,11 +222,11 @@
                   },
                   "payload": {
                     "community": {
-                      "id": 33,
+                      "id": 438,
                       "name": "Ruby",
                       "description": "Wonderful language",
-                      "created_at": "2022-08-24T08:44:20.618Z",
-                      "updated_at": "2022-08-24T08:44:20.618Z",
+                      "created_at": "2022-08-25T06:45:30.366Z",
+                      "updated_at": "2022-08-25T06:45:30.366Z",
                       "creator_id": null
                     },
                     "subscribed_at": null
@@ -273,6 +274,505 @@
                     "success": true
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/communities/{id}/unsubscribe": {
+      "post": {
+        "summary": "unsubscribe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscribe to community",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posts": {
+      "get": {
+        "summary": "index",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "community_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "default": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "default": 10,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List posts",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "posts": [
+                      {
+                        "id": 258,
+                        "user_id": 549,
+                        "community_id": 441,
+                        "post_id": null,
+                        "title": "MyString",
+                        "content": "MyText",
+                        "status": "published",
+                        "pin": false,
+                        "created_at": "2022-08-25T06:45:30.519Z",
+                        "updated_at": "2022-08-25T06:45:30.519Z",
+                        "user": {
+                          "id": 549,
+                          "username": "test",
+                          "gender": "male",
+                          "age": null
+                        }
+                      }
+                    ],
+                    "total_count": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publish post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true,
+                    "post": {
+                      "id": 260,
+                      "user_id": 550,
+                      "community_id": 442,
+                      "post_id": null,
+                      "title": "Hello world",
+                      "content": "Hello world",
+                      "status": "published",
+                      "pin": false,
+                      "created_at": "2022-08-25T06:45:30.588Z",
+                      "updated_at": "2022-08-25T06:45:30.588Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 400,
+                    "message": "Validation failed: Post cannot be published: User is not subscribed to this community"
+                  },
+                  "payload": {
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "community_id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "community_id",
+                  "title",
+                  "content"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posts/{id}": {
+      "get": {
+        "summary": "show",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Show post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "post": {
+                      "id": 262,
+                      "user_id": 552,
+                      "community_id": 444,
+                      "post_id": null,
+                      "title": "MyString",
+                      "content": "MyText",
+                      "status": "published",
+                      "pin": false,
+                      "created_at": "2022-08-25T06:45:30.642Z",
+                      "updated_at": "2022-08-25T06:45:30.642Z",
+                      "comments": [
+
+                      ],
+                      "user": {
+                        "id": 552,
+                        "username": "test",
+                        "gender": "male",
+                        "age": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Edit post"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "destroy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Destroy a post or a comment",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true,
+                    "post": {
+                      "status": "deleted",
+                      "id": 264,
+                      "user_id": 554,
+                      "community_id": 446,
+                      "post_id": null,
+                      "title": "MyString",
+                      "content": "MyText",
+                      "pin": false,
+                      "created_at": "2022-08-25T06:45:30.714Z",
+                      "updated_at": "2022-08-25T06:45:30.731Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posts/{id}/like": {
+      "post": {
+        "summary": "like",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like a post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "liked": true,
+                    "post": {
+                      "id": 265,
+                      "user_id": 555,
+                      "community_id": 447,
+                      "post_id": null,
+                      "title": "MyString",
+                      "content": "MyText",
+                      "status": "published",
+                      "pin": false,
+                      "created_at": "2022-08-25T06:45:30.746Z",
+                      "updated_at": "2022-08-25T06:45:30.746Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posts/{id}/reply": {
+      "post": {
+        "summary": "reply",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Bearer token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reply a post",
+            "content": {
+              "application/json": {
+                "example": {
+                  "meta": {
+                    "status": 200,
+                    "message": "success"
+                  },
+                  "payload": {
+                    "success": true,
+                    "comment": {
+                      "id": 267,
+                      "user_id": 556,
+                      "community_id": 448,
+                      "post_id": 266,
+                      "title": "Re: MyString",
+                      "content": "How is there?",
+                      "status": "published",
+                      "pin": false,
+                      "created_at": "2022-08-25T06:45:30.811Z",
+                      "updated_at": "2022-08-25T06:45:30.811Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
               }
             }
           }

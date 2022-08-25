@@ -9,7 +9,7 @@ module Middleware
       if authroization_header
         begin
           @decoded = JsonWebToken.decode(authroization_header)
-          env['current_user'] = User.find(@decoded[:id])
+          env['current_user_id'] = @decoded[:id]
           return @app.call(env)
         rescue ActiveRecord::RecordNotFound, JWT::DecodeError
           response = [{
