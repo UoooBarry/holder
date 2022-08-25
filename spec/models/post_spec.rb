@@ -38,4 +38,17 @@ RSpec.describe Post, type: :model do
       expect(article.comments.include?(comment)).to be_falsy
     end
   end
+
+  context 'when pinned' do
+    it 'always on the top of the array' do
+      latest_article = Post.create(user: article.user, community: article.community, title: 'Latest Article',
+                                   content: 'Latest Article Content')
+      article.pin!
+
+      # Pinned article should be the first article in the list
+      expect(
+        Post.default_order.pluck(:id)
+      ).equal?([article.id, latest_article.id])
+    end
+  end
 end

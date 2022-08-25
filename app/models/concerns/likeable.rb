@@ -1,3 +1,4 @@
+# 点赞功能
 module Likeable
   extend ActiveSupport::Concern
 

@@ -197,6 +197,50 @@ RSpec.describe 'api/posts', type: :request do
     end
   end
 
+  path '/api/posts/{id}/pin' do
+    post 'pin a post' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :string
+      parameter name: 'Authorization', in: :header, type: :string, required: true, description: 'Bearer token'
+
+      response '200', 'Admin pin a post' do
+        let(:id) { article.id }
+        let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        before do
+          article.community.admin!(article.user)
+        end
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response '403', 'An user is not an admin' do
+        let(:id) { article.id }
+        let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
+
   path '/api/posts/{id}/reply' do
     post 'reply' do
       consumes 'application/json'
