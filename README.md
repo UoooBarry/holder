@@ -5,6 +5,14 @@
 
 Ruby On Rails Forum API Project.
 
+## Stacks
+
+[Ruby On Rails](https://rubyonrails.org/)
+
+[PostgreSQL](https://www.postgresql.org/)
+
+[ElasticSeach](https://www.elastic.co/)
+
 ## Getting Started
 
 This project is warped up with docker-compose.
