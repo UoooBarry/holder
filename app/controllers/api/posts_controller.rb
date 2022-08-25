@@ -1,7 +1,7 @@
 module Api
   class PostsController < ApplicationController
     require_auth! except: %i[index show]
-    before_action :set_post, only: %i[show update destroy like]
+    before_action :set_post, only: %i[show update destroy like reply]
 
     def index
       community_id = params[:community_id]
@@ -26,7 +26,7 @@ module Api
     end
 
     def show
-      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }])
+      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }], methods: %i[comments])
 
       render_response(post: @post_json)
     end
@@ -56,6 +56,12 @@ module Api
     def like
       result = @post.liked_by(current_user)
       render_response(liked: result, post: @post)
+    end
+
+    def reply
+      @comment = @post.reply(current_user, params[:content])
+
+      render_response(success: true, comment: @comment)
     end
 
     private

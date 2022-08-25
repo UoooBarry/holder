@@ -119,6 +119,9 @@ RSpec.describe 'api/posts', type: :request do
     end
 
     patch 'update' do
+      consumes 'application/json'
+      produces 'application/json'
+
       parameter name: :id, in: :path, type: :string
       parameter name: :params, in: :body, schema: {
         type: :object,
@@ -129,7 +132,7 @@ RSpec.describe 'api/posts', type: :request do
         required: %w[title content]
       }
 
-      parameter name: 'Authorization', in: :header, type: :string, required: false, description: 'Bearer token'
+      parameter name: 'Authorization', in: :header, type: :string, required: true, description: 'Bearer token'
 
       response '200', 'Edit post' do
         let(:id) { article.id }
@@ -145,6 +148,28 @@ RSpec.describe 'api/posts', type: :request do
         run_test!
       end
     end
+
+    delete 'destroy' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :string
+      parameter name: 'Authorization', in: :header, type: :string, required: false, description: 'Bearer token'
+      response '200', 'Destroy a post or a comment' do
+        let(:id) { article.id }
+        let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
   end
 
   path '/api/posts/{id}/like' do
@@ -153,11 +178,57 @@ RSpec.describe 'api/posts', type: :request do
       produces 'application/json'
 
       parameter name: :id, in: :path, type: :string
-      parameter name: 'Authorization', in: :header, type: :string, required: false, description: 'Bearer token'
+      parameter name: 'Authorization', in: :header, type: :string, required: true, description: 'Bearer token'
 
       response '200', 'Like a post' do
         let(:id) { article.id }
         let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/posts/{id}/reply' do
+    post 'reply' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :string
+      parameter name: 'Authorization', in: :header, type: :string, required: true, description: 'Bearer token'
+      parameter name: :params, in: :body, schema: {
+        type: :object,
+        properties: {
+          content: { type: :string }
+        },
+        required: %w[content]
+      }
+
+      response '200', 'Reply a post' do
+        let(:id) { article.id }
+        let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        let(:params) do
+          {
+            content: 'How is there?'
+          }
+        end
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
 
         run_test!
       end

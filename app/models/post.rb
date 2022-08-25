@@ -15,6 +15,7 @@
 #
 class Post < ApplicationRecord
   include Likeable
+  include Replyable
 
   belongs_to :user
   belongs_to :community
@@ -22,6 +23,7 @@ class Post < ApplicationRecord
 
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
+  has_many :comments, dependent: :destroy, class_name: 'Post'
 
   validates :title, :content, :user_id, :community_id, presence: true
 
@@ -33,8 +35,4 @@ class Post < ApplicationRecord
   scope :by_community, ->(community_id) { where(community_id: community_id) }
   scope :main_posts, -> { where(post_id: nil) }
   enum status: { draft: 0, published: 1, deleted: 2 }
-
-  def comments
-    Post.where(post_id: id)
-  end
 end

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :posts do
       member do
         post :like
+        post :reply
       end
     end
   end
