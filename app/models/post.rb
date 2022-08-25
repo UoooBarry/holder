@@ -22,10 +22,11 @@ class Post < ApplicationRecord
 
   scope :default_order, -> { order('created_at DESC') }
 
-  default_scope { published }
+  default_scope { main_posts.published }
 
   scope :by_user, ->(user_id) { where(user_id: user_id) }
   scope :by_community, ->(community_id) { where(community_id: community_id) }
+  scope :main_posts, -> { where(post_id: nil) }
 
   enum status: { draft: 0, published: 1, deleted: 2 }
 

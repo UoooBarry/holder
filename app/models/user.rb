@@ -14,7 +14,7 @@
 #
 class User < ApplicationRecord
   include SubscribeCommunityConcern
-  include SoftDeletable
+  include SoftDeleteable
 
   has_secure_password
   validates :email, :username, presence: true
