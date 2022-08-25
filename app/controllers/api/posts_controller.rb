@@ -1,7 +1,9 @@
 module Api
   class PostsController < ApplicationController
     require_auth! except: %i[index show]
-    before_action :set_post, only: %i[show update destroy like reply]
+    before_action :set_post, only: %i[show update destroy like reply pin]
+    before_action :validate_admin!, only: %i[pin]
+    before_action :validate_post_ownership!, only: %i[update destroy]
 
     def index
       community_id = params[:community_id]
@@ -21,12 +23,13 @@ module Api
       @posts = @posts.default_order.page(page).per(per_page)
       @total_count = @posts.total_count
 
-      @posts_json = @posts.as_json(include: [user: { only: %i[id username gender age] }])
+      @posts_json = @posts.as_json(include: [user: { only: %i[id username gender age] }], methods: %i[likes_count])
       render_response(posts: @posts_json, total_count: @total_count)
     end
 
     def show
-      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }], methods: %i[comments])
+      @post_json = @post.as_json(include: [user: { only: %i[id username gender age] }],
+                                 methods: %i[comments likes_count])
 
       render_response(post: @post_json)
     end
@@ -38,16 +41,12 @@ module Api
     end
 
     def destroy
-      validate_owndership!(@post)
-
       @post.deleted!
 
       render_response(success: @post.deleted?, post: @post)
     end
 
     def update
-      validate_owndership!(@post)
-
       @post.update!(post_params.except(:community_id))
 
       render_response(success: true, post: @post)
@@ -64,6 +63,12 @@ module Api
       render_response(success: true, comment: @comment)
     end
 
+    def pin
+      pin = @post.pin!
+
+      render_response(sucess: pin, post: @post)
+    end
+
     private
 
     def post_params
@@ -72,6 +77,19 @@ module Api
 
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def validate_admin!
+      return if current_user.admin_of?(@post.community)
+
+      raise UnAuthorizedResource, 'You are not authorized to access this resource'
+    end
+
+    def validate_post_ownership!
+      # Admin can manage all posts
+      return if current_user.admin_of?(@post.community)
+
+      validate_owndership!(@post)
     end
   end
 end

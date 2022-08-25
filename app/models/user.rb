@@ -34,6 +34,9 @@ class User < ApplicationRecord
                                  inverse_of: :creator
   has_many :liked_posts, through: :likes
 
+  has_many :community_admins, class_name: 'CommunityAdmin', dependent: :destroy
+  has_many :owned_communities, through: :community_admins, source: :community
+
   enum gender: {
     secret: 0,
     male: 1,
@@ -63,5 +66,9 @@ class User < ApplicationRecord
 
   def like(post)
     post.liked_by(self)
+  end
+
+  def admin_of?(community)
+    owned_communities.include?(community)
   end
 end

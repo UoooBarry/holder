@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       member do
         post :like
         post :reply
+        post :pin
       end
     end
   end

@@ -16,6 +16,7 @@
 class Post < ApplicationRecord
   include Likeable
   include Replyable
+  include Pinable
 
   belongs_to :user
   belongs_to :community
@@ -27,7 +28,7 @@ class Post < ApplicationRecord
 
   validates :title, :content, :user_id, :community_id, presence: true
 
-  scope :default_order, -> { order('created_at DESC') }
+  scope :default_order, -> { order('pin DESC').order('created_at DESC') }
 
   default_scope { main_posts.published }
 

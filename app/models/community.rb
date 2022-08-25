@@ -18,9 +18,22 @@ class Community < ApplicationRecord
   # allow no creator community created by system
   belongs_to :creator, class_name: 'User', optional: true
 
+  has_many :community_admins, class_name: 'CommunityAdmin', dependent: :destroy
+  has_many :admins, through: :community_admins, source: :user
+
   scope :default_order, -> { order('created_at DESC') }
 
   after_create :creator_auto_subscribe
+
+  def admin!(user)
+    admins << user
+
+    save!
+  end
+
+  def admin?(user)
+    admins.include?(user)
+  end
 
   private
 
