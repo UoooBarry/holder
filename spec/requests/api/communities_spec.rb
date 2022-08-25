@@ -76,4 +76,28 @@ RSpec.describe 'api/communities', type: :request do
       end
     end
   end
+
+  path '/api/communities/{id}/unsubscribe' do
+    post 'unsubscribe' do
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
+      parameter name: 'Authorization', in: :header, type: :string, required: true, description: 'Bearer token'
+
+      response '200', 'Subscribe to community' do
+        let(:id) { community.id }
+        let(:Authorization) { "Bearer #{user.to_token[0]}" }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
 end

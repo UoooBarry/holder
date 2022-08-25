@@ -40,10 +40,13 @@ ActiveRecord::Schema.define(version: 2022_08_24_085735) do
     t.bigint "post_id"
     t.string "title", null: false
     t.text "content", null: false
+    t.integer "status", default: 0, null: false
+    t.boolean "pin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["post_id"], name: "index_posts_on_post_id"
+    t.index ["status"], name: "index_posts_on_status"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 

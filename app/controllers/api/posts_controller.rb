@@ -31,6 +31,28 @@ module Api
       render_response(post: @post_json)
     end
 
+    def create
+      @post = PublishPostService.call(current_user, post_params)
+
+      render_response(success: @post.published?, post: @post)
+    end
+
+    def destroy
+      validate_owndership!(@post)
+
+      @post.deleted!
+
+      render_response(success: @post.deleted?, post: @post)
+    end
+
+    def update
+      validate_owndership!(@post)
+
+      @post.update!(post_params.except(:community_id))
+
+      render_response(success: true, post: @post)
+    end
+
     private
 
     def post_params

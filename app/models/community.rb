@@ -19,4 +19,14 @@ class Community < ApplicationRecord
   belongs_to :creator, class_name: 'User', optional: true
 
   scope :default_order, -> { order('created_at DESC') }
+
+  after_create :creator_auto_subscribe
+
+  private
+
+  def creator_auto_subscribe
+    return unless creator
+
+    creator.subscribe!(self)
+  end
 end

@@ -34,7 +34,7 @@ module Api
       render_error(exception.message, status: 404)
     end
 
-    rescue_from ::Jwt::Errors::UnAuthorizedUser, ::Jwt::Errors::MissingToken do |exception|
+    rescue_from ::Jwt::Errors::UnAuthorizedUser, ::Jwt::Errors::MissingToken, UnAuthorizedResource do |exception|
       render_error(exception.message, status: 403)
     end
 

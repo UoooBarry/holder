@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :communities do
       member do
         post :subscribe
+        post :unsubscribe
       end
     end
 
