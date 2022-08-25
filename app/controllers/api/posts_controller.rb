@@ -1,7 +1,7 @@
 module Api
   class PostsController < ApplicationController
-    require_auth! only: %i[create destroy update]
-    before_action :set_post, only: %i[show update destroy]
+    require_auth! except: %i[index show]
+    before_action :set_post, only: %i[show update destroy like]
 
     def index
       community_id = params[:community_id]
@@ -51,6 +51,11 @@ module Api
       @post.update!(post_params.except(:community_id))
 
       render_response(success: true, post: @post)
+    end
+
+    def like
+      result = @post.liked_by(current_user)
+      render_response(liked: result, post: @post)
     end
 
     private

@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :posts
+    resources :posts do
+      member do
+        post :like
+      end
+    end
   end
 end

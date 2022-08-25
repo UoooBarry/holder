@@ -146,4 +146,21 @@ RSpec.describe 'api/posts', type: :request do
       end
     end
   end
+
+  path '/api/posts/{id}/like' do
+    post 'like' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :string
+      parameter name: 'Authorization', in: :header, type: :string, required: false, description: 'Bearer token'
+
+      response '200', 'Like a post' do
+        let(:id) { article.id }
+        let(:Authorization) { "Bearer #{article.user.to_token[0]}" }
+
+        run_test!
+      end
+    end
+  end
 end

@@ -11,6 +11,7 @@
 #  bio             :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  is_deleted      :boolean          default(FALSE), not null
 #
 class User < ApplicationRecord
   include SubscribeCommunityConcern
@@ -31,6 +32,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :created_communities, class_name: 'Community', foreign_key: 'creator_id', dependent: :nullify,
                                  inverse_of: :creator
+  has_many :liked_posts, through: :likes
 
   enum gender: {
     secret: 0,
@@ -57,5 +59,9 @@ class User < ApplicationRecord
 
   def created_communities
     Community.where(creator_id: id)
+  end
+
+  def like(post)
+    post.liked_by(self)
   end
 end

@@ -11,6 +11,7 @@
 #  bio             :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  is_deleted      :boolean          default(FALSE), not null
 #
 FactoryBot.define do
   factory :user do
