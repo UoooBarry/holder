@@ -85,6 +85,9 @@ module Api
     end
 
     def validate_post_ownership!
+      # Admin can manage all posts
+      return if current_user.admin_of?(@post.community)
+
       validate_owndership!(@post)
     end
   end
