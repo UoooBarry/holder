@@ -59,7 +59,6 @@ RSpec.describe 'api/posts', type: :request do
           }
         end
 
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

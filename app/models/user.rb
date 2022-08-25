@@ -14,6 +14,7 @@
 #
 class User < ApplicationRecord
   include SubscribeCommunityConcern
+  include SoftDeletable
 
   has_secure_password
   validates :email, :username, presence: true
@@ -28,7 +29,8 @@ class User < ApplicationRecord
   has_many :communities_users, class_name: 'CommunitiesUser', dependent: :destroy
   has_many :communities, through: :communities_users
   has_many :posts, dependent: :destroy
-  has_many :created_communities, class_name: 'Community', foreign_key: 'creator_id'
+  has_many :created_communities, class_name: 'Community', foreign_key: 'creator_id', dependent: :nullify,
+                                 inverse_of: :creator
 
   enum gender: {
     secret: 0,
