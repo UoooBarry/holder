@@ -15,8 +15,8 @@
 #
 class Post < ApplicationRecord
   # FullTextSearch
-  include Searchable
-  include PostSearchConcern
+  include Elasticsearch::Searchable
+  include Elasticsearch::PostSearchConcern
 
   include Likeable
   include Replyable

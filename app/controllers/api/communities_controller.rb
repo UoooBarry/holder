@@ -1,7 +1,8 @@
 module Api
   class CommunitiesController < ApplicationController
     require_auth! except: %i[index show]
-    before_action :set_community, only: %i[show subscribe unsubscribe]
+    before_action :set_community, only: %i[show subscribe unsubscribe set_admin]
+    before_action :validate_admin!, only: %i[set_admin]
 
     def index
       page = params[:page] || 1
@@ -44,6 +45,13 @@ module Api
       render_response(success: !current_user.subscribe?(@community))
     end
 
+    def set_admin
+      @user = User.find(params[:user_id])
+      @community.admin!(@user)
+
+      render_response(success: @user.admin_of?(@community))
+    end
+
     private
 
     def community_params
@@ -52,6 +60,12 @@ module Api
 
     def set_community
       @community = Community.find(params[:id])
+    end
+
+    def validate_admin!
+      return if current_user.admin_of?(@community)
+
+      raise UnAuthorizedResource
     end
   end
 end

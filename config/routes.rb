@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       member do
         post :subscribe
         post :unsubscribe
+        post :set_admin
       end
     end
 
