@@ -6,6 +6,57 @@ RSpec.describe 'api/auth', type: :request do
     @user.update!(email: 'test@gmail.com', password: '1234567a')
   end
 
+  path '/api/users' do
+    post 'register' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :params, in: :body, schema: {
+        type: :object,
+        properties: {
+          username: { type: :string },
+          password: { type: :string },
+          email: { type: :string },
+          bio: { type: :string },
+          age: { type: :integer },
+          gender: { type: :string }
+        },
+        required: %w[username password email]
+      }
+
+      response '200', 'Register success' do
+        let(:params) do
+          {
+            username: 'lololol',
+            password: 'password123',
+            email: 'myaccount@forum.com'
+          }
+        end
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: {
+                meta: {
+                  status: 200,
+                  message: 'success'
+                },
+                payload: {
+                  sucess: true,
+                  access_token: 'xxxxtoken',
+                  exp_at: '2022-08-27T03:06:46.150Z',
+                  refresh_token: 'xxx'
+                }
+              }
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
+
   path '/api/auth/login' do
     post 'login' do
       consumes 'application/json'
@@ -31,7 +82,17 @@ RSpec.describe 'api/auth', type: :request do
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
+              example: {
+                meta: {
+                  status: 200,
+                  message: 'success'
+                },
+                payload: {
+                  access_token: 'xxxxtoken',
+                  exp_at: '2022-08-27T03:06:46.150Z',
+                  refresh_token: 'xxx'
+                }
+              }
             }
           }
         end
