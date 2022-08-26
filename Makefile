@@ -16,6 +16,8 @@ bundle:
 	docker-compose run --rm web bundle
 bundle-update:
 	docker-compose run --rm web bundle update
+es-import:
+	docker-compose run --rm web rake elasticsearch:import_posts
 annotate-models:
 	docker-compose run --rm web bundle exec annotate --models --exclude fixtures
 swaggerize:

@@ -24,6 +24,7 @@ class Community < ApplicationRecord
   scope :default_order, -> { order('created_at DESC') }
 
   after_create :creator_auto_subscribe
+  after_create :add_creator_to_admin
 
   def admin!(user)
     admins << user
@@ -41,5 +42,11 @@ class Community < ApplicationRecord
     return unless creator
 
     creator.subscribe!(self)
+  end
+
+  def add_creator_to_admin
+    return unless creator
+
+    admin!(creator)
   end
 end

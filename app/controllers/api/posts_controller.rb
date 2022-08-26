@@ -87,7 +87,7 @@ module Api
     def validate_admin!
       return if current_user.admin_of?(@post.community)
 
-      raise UnAuthorizedResource, 'You are not authorized to access this resource'
+      raise UnAuthorizedResource
     end
 
     def validate_post_ownership!

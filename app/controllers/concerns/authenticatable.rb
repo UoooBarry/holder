@@ -1,7 +1,11 @@
 module Authenticatable
   extend ActiveSupport::Concern
 
-  class UnAuthorizedResource < StandardError; end
+  class UnAuthorizedResource < StandardError
+    def initialize(message = 'You are not authorized to access this resource')
+      super(message)
+    end
+  end
 
   def current_user
     @current_user ||= User.find_by(id: request.env['current_user_id'])

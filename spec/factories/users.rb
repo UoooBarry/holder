@@ -21,4 +21,9 @@ FactoryBot.define do
     gender { 1 }
     bio { 'MyText' }
   end
+
+  trait :second do
+    username { 'test_second' }
+    email { 'test_second@gmail.com' }
+  end
 end

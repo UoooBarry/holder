@@ -136,7 +136,17 @@ RSpec.describe 'api/auth', type: :request do
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
+              example: {
+                meta: {
+                  status: 200,
+                  message: 'success'
+                },
+                payload: {
+                  access_token: 'xxxxtoken',
+                  exp_at: '2022-08-27T03:06:46.150Z',
+                  refresh_token: 'xxx'
+                }
+              }
             }
           }
         end
