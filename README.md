@@ -97,7 +97,7 @@ POST /api/auth/logout 登出
 GET /api/communities 社区列表
 POST /api/communities 创建新社区, 创建者会被设置成管理员
 GET /api/communities/:id 社区详情
-POST /api/communities/:id/set_admin 增加社区管理员
+POST /api/communities/:id/set_admin 增加社区管理员, 验证社区管理员权限
 POST /api/communities/:id/subscribe 订阅社区
 POST /api/communities/:id/unsubscribe 取消订阅社区
 GET /api/posts 帖子列表, 可以指定社区id, 用户id或全文搜索
