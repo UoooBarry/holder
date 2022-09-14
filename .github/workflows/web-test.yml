@@ -28,5 +28,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: holder-web/package-lock.json
     - run: cd holder-web && npm install
     - run: cd holder-web && npm run lint
