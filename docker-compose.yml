@@ -48,19 +48,19 @@ services:
       DATABASE_PORT: 5432
       EDITOR: "vim"
     volumes:
-      - .:/rails-forum:delegated
+      - .:/holder:delegated
       - bundle:/usr/local/bundle
-      - cache:/rails-forum/tmp/cache
+      - cache:/holder/tmp/cache
   web_test:
-    image: rails-forum_web
-    container_name: rails-forum-test
+    image: holder_web
+    container_name: holder-test
     entrypoint: test-entrypoint.sh
     command: ["rails", "-v"]
     stdin_open: true
     volumes:
-      - .:/rails-forum:delegated
+      - .:/holder:delegated
       - bundle:/usr/local/bundle
-      - cache:/rails-forum/tmp/cache
+      - cache:/holder/tmp/cache
     tty: true
     ports:
       - "9000:3000"

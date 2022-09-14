@@ -1,11 +1,11 @@
 FROM ruby:3.1.0
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-RUN mkdir /rails-forum
-WORKDIR /rails-forum
-COPY Gemfile /rails-forum/Gemfile
-COPY Gemfile.lock /rails-forum/Gemfile.lock
+RUN mkdir /holder
+WORKDIR /holder
+COPY Gemfile /holder/Gemfile
+COPY Gemfile.lock /holder/Gemfile.lock
 RUN bundle install
-COPY . /rails-forum
+COPY . /holder
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/entrypoint.sh
