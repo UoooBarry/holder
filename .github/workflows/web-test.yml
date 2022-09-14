@@ -28,5 +28,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+        cache-dependency-path: holder-web/yarn.lock
     - run: cd holder-web && npm install
     - run: cd holder-web && npm run lint
