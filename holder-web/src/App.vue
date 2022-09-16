@@ -7,15 +7,7 @@
   </v-app>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import NavigationDrawer from '@/components/NavigationDrawer.vue';
 import ContentBoard from '@/components/ContentBoard.vue';
-
-export default {
-  name: 'App',
-  components: {
-    NavigationDrawer,
-    ContentBoard,
-  },
-};
 </script>
