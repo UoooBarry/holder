@@ -1,4 +1,5 @@
 import type { Community } from '@/types/community.type';
+import type { Commit } from 'vuex';
 
 export interface State {
   menus: Array<Community> | Array<any>;
@@ -19,12 +20,12 @@ const getters = {
 };
 
 const actions = {
-  setMenus({ commit }: any, menus: Array<Community>): void {
+  setMenus({ commit }: { commit: Commit }, menus: Array<Community>): void {
     commit('setLoading', true);
     commit('setMenus', menus);
     commit('setLoading', false);
   },
-  setCurrentList({ commit }: any, currentList: 'community' | 'post' | 'posts'): void {
+  setCurrentList({ commit }: { commit: Commit }, currentList: 'community' | 'post' | 'posts'): void {
     commit('setCurrentList', currentList);
   },
 };

@@ -1,5 +1,6 @@
 import type { Post } from '@/types/post.type';
 import { getPosts, getPost } from '@/api/posts.api';
+import type { Commit } from 'vuex';
 
 export interface State {
   posts: Array<Post>;
@@ -19,23 +20,26 @@ const getters = {
 };
 
 const actions = {
-  async fetchPosts({ commit }: any): Promise<void> {
+  async fetchPosts({ commit }: { commit: Commit }): Promise<void> {
     commit('setLoading', true);
-    const { posts }: any = await getPosts();
+    const { posts } = await getPosts();
 
     commit('setPosts', posts);
     commit('setLoading', false);
   },
-  async fetchPostsByCommunityId({ commit }: any, communityId: number): Promise<void> {
+  async fetchPostsByCommunityId(
+    { commit }: { commit: Commit },
+    communityId: number,
+  ): Promise<void> {
     commit('setLoading', true);
-    const { posts }: any = await getPosts({ community_id: communityId });
+    const { posts } = await getPosts({ community_id: communityId });
 
     commit('setPosts', posts);
     commit('setLoading', false);
   },
-  async fetchPostById({ commit }: any, postId: number): Promise<void> {
+  async fetchPostById({ commit }: { commit: Commit }, postId: number): Promise<void> {
     commit('setLoading', true);
-    const { post }: any = await getPost(postId);
+    const { post } = await getPost(postId);
 
     commit('setCurrentPost', post);
     commit('setLoading', false);

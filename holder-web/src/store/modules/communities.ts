@@ -1,5 +1,6 @@
 import { getCommunities } from '@/api/communities.api';
 import type { Community } from '@/types/community.type';
+import type { Commit } from 'vuex';
 
 export interface State {
   communities: Array<Community>;
@@ -16,9 +17,9 @@ const getters = {
 };
 
 const actions = {
-  async fetchCommunities({ commit }: any): Promise<void> {
+  async fetchCommunities({ commit }: { commit: Commit }): Promise<void> {
     commit('setLoading', true);
-    const { communities }: any = await getCommunities();
+    const { communities } = await getCommunities();
 
     commit('setCommunities', communities);
     commit('setLoading', false);

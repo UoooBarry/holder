@@ -21,9 +21,9 @@ const errorStatusHandler = (error: any) => {
 
 // response interceptor
 service.interceptors.response.use(
-  (response: any) => response.data.payload,
+  (response) => response.data.payload,
 
-  (error: any) => {
+  (error) => {
     errorStatusHandler(error);
 
     return Promise.reject(error);
