@@ -1,4 +1,4 @@
-# holder-vue
+# holder-web
 
 ## Project setup
 ```

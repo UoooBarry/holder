@@ -10,9 +10,31 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
+import { useStore } from 'vuex';
+import type { Ref } from 'vue';
+import { useRoute } from 'vue-router';
+import {
+  watch,
+  ref,
+} from 'vue';
 
-export default class ContentBoard extends Vue {
-  today: Date = new Date();
-}
+export default {
+  setup() {
+    const today: Ref<Date> = ref(new Date());
+
+    const store = useStore();
+    const route = useRoute();
+
+    const fetchPostById = (id: number) => store.dispatch('post/fetchPostsByCommunityId', id);
+    watch(route, async () => {
+      if (route.name === 'post-detail') {
+        await fetchPostById(Number(route.params.id));
+      }
+    });
+
+    return {
+      today,
+    };
+  },
+};
 </script>
